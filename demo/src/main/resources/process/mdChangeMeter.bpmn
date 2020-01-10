@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="MdChangeMeter" name="业扩换表" isExecutable="true">
+    <startEvent id="changeRegister" name="换表登记"></startEvent>
+    <userTask id="changeConfirm" name="需求确认" activiti:candidateUsers="${inputUser}" activiti:formKey="/business/changeMeterConfirmPage"></userTask>
+    <sequenceFlow id="flow1" sourceRef="changeRegister" targetRef="changeConfirm"></sequenceFlow>
+    <userTask id="changeMeterApprove" name="审核归档" activiti:candidateUsers="${inputUser}" activiti:formKey="/business/changeMeterApprovePage"></userTask>
+    <userTask id="changeInstallMeter" name="计量装接" activiti:candidateUsers="${inputUser}" activiti:formKey="/business/changeInstallMeterPage"></userTask>
+    <sequenceFlow id="flow6" name="通过" sourceRef="changeConfirm" targetRef="changeInstallMeter"></sequenceFlow>
+    <sequenceFlow id="flow7" name="通过" sourceRef="changeInstallMeter" targetRef="changeMeterApprove"></sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow8" name="通过" sourceRef="changeMeterApprove" targetRef="endevent1">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${message=="YES"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow9" name="不通过" sourceRef="changeMeterApprove" targetRef="changeInstallMeter">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${message=="NO"}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_MdChangeMeter">
+    <bpmndi:BPMNPlane bpmnElement="MdChangeMeter" id="BPMNPlane_MdChangeMeter">
+      <bpmndi:BPMNShape bpmnElement="changeRegister" id="BPMNShape_changeRegister">
+        <omgdc:Bounds height="35.0" width="35.0" x="390.0" y="70.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="changeConfirm" id="BPMNShape_changeConfirm">
+        <omgdc:Bounds height="55.0" width="105.0" x="470.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="changeMeterApprove" id="BPMNShape_changeMeterApprove">
+        <omgdc:Bounds height="55.0" width="105.0" x="770.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="changeInstallMeter" id="BPMNShape_changeInstallMeter">
+        <omgdc:Bounds height="55.0" width="105.0" x="620.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="920.0" y="70.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="425.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="470.0" y="87.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="575.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="620.0" y="87.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="579.0" y="70.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="725.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="770.0" y="87.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="729.0" y="70.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="875.0" y="87.0"></omgdi:waypoint>
+        <omgdi:waypoint x="920.0" y="87.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="24.0" x="879.0" y="70.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="822.0" y="60.0"></omgdi:waypoint>
+        <omgdi:waypoint x="821.0" y="38.0"></omgdi:waypoint>
+        <omgdi:waypoint x="671.0" y="38.0"></omgdi:waypoint>
+        <omgdi:waypoint x="672.0" y="60.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="14.0" width="36.0" x="725.0" y="21.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
